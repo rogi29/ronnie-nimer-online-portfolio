@@ -1,0 +1,205 @@
+---
+import Icon from "astro-icon";
+import gallery from "../data/gallery";
+import { ElementTag } from "../types/ElementMetadata";
+---
+
+<div>
+  {
+    gallery.map((element, index) => (
+      <div class="presentation" id={`gallery-${element.id}`}>
+        <div class="presentation__inner">
+          <a class="presentation__close" href={`#${element.id}`}>
+            <Icon
+              pack="mdi"
+              name="close-circle"
+              class="presentation__icon"
+              width="2.125rem"
+              color="#111111dd"
+              style="background:#ffffff99;"
+            />
+          </a>
+          <div class="presentation__asset">
+            {() => {
+              switch (element.tag) {
+                case ElementTag.IMG:
+                  return (
+                    <img
+                      src={element.src}
+                      alt={element.alt}
+                      title={element.title}
+                    />
+                  );
+                case ElementTag.VIDEO:
+                  return (
+                    <video
+                      src={element.src}
+                      poster={element.poster}
+                      title={element.title}
+                      autoplay={element.autoplay}
+                      loop={element.loop}
+                      controls
+                      muted
+                    />
+                  );
+              }
+            }}
+          </div>
+          <a
+            class="presentation__prev"
+            href={`#gallery-${gallery[Math.max(index - 1, 0)].id}`}
+          >
+            <Icon
+              pack="mdi"
+              name="arrow-left-drop-circle"
+              class="presentation__icon"
+              width="3.125rem"
+              color="#ffffffcc"
+              style="background:#22222299;"
+            />
+          </a>
+          <a
+            class="presentation__next"
+            href={`#gallery-${
+              gallery[Math.min(index + 1, gallery.length - 1)].id
+            }`}
+          >
+            <Icon
+              pack="mdi"
+              name="arrow-right-drop-circle"
+              class="presentation__icon"
+              width="3.125rem"
+              color="#ffffffcc"
+              style="background:#22222299;"
+            />
+          </a>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .presentation {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    background: linear-gradient(180deg, #55555599, #00000099);
+    backdrop-filter: blur(25px);
+    z-index: 100;
+  }
+  .presentation:target {
+    display: block;
+  }
+  .presentation__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    perspective: 100px;
+  }
+  .presentation__asset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+  }
+  .presentation__asset > img,
+  .presentation__asset > video {
+    display: block;
+    width: auto;
+    max-width: calc(100% - 30vw);
+    height: auto;
+    max-height: 90vh;
+    filter: drop-shadow(0 0 10px #0003);
+  }
+  @media (max-width: 1080px) {
+    .presentation__asset > img,
+    .presentation__asset > video {
+      max-width: calc(100% - 1.5rem);
+      max-height: 80vh;
+    }
+  }
+  .presentation__close {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    color: #ffffffdd;
+    z-index: 103;
+  }
+  @media (max-width: 1080px) {
+    .presentation__close {
+      left: 1rem;
+      top: 1rem;
+    }
+  }
+  .presentation__prev,
+  .presentation__next {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 15vw;
+    height: 100%;
+    z-index: 101;
+    top: auto;
+    bottom: auto;
+    color: #ffffffdd;
+  }
+  @media (max-width: 1080px) {
+    .presentation__prev,
+    .presentation__next {
+      width: 49%;
+      height: 100%;
+      padding: 0 2rem;
+      z-index: 101;
+    }
+    .presentation__prev .presentation__icon,
+    .presentation__next .presentation__icon {
+      opacity: 0.4;
+      transition: opacity ease-in-out 0.2s;
+    }
+    .presentation__prev:hover .presentation__icon,
+    .presentation__next:hover .presentation__icon {
+      opacity: 1;
+    }
+    .presentation__prev {
+      align-items: flex-start;
+    }
+    .presentation__next {
+      align-items: flex-end;
+    }
+  }
+  .presentation__prev:active {
+    background: linear-gradient(90deg, #ffffff1f, transparent);
+  }
+  .presentation__next:active {
+    background: linear-gradient(270deg, #ffffff1f, transparent);
+  }
+  .presentation__prev {
+    left: 0;
+    right: auto;
+  }
+  .presentation__next {
+    left: auto;
+    right: 0;
+  }
+  .presentation__icon {
+    border-radius: 100%;
+  }
+</style>
