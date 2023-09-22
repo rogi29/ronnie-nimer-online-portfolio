@@ -16,12 +16,9 @@ const { title } = Astro.props;
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" />
     <link
-      href="https://fonts.googleapis.com/css?family=Inter"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Croissant One"
+      href="https://fonts.googleapis.com/css?family=Inter&display=swap"
       rel="stylesheet"
     />
     <meta name="generator" content={Astro.generator} />
@@ -32,9 +29,13 @@ const { title } = Astro.props;
     <header>
       <div class="profile">
         <img
-          src="https://ik.imagekit.io/8hod93w55/tr:w-55/ronnie-profile.jpg"
+          src="https://ik.imagekit.io/8hod93w55/tr:w-262,h-262,q-100/ronnie-profile.jpg"
+          alt="Ronnie Nimer"
           width="55px"
           height="55px"
+          fetchpriority="high"
+          loading="eager"
+          decoding="auto"
         />
       </div>
 

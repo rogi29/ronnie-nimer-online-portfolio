@@ -29,14 +29,16 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
                     `tr=w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
                   return (
                     <picture>
-                      {Object.values(ScreenWidths).map((width) => (
-                        <source
-                          media={MediaQueries[width]}
-                          srcset={`${element.src}?tr=${transform(width)}`}
-                          width={`${width}px`}
-                          height={`${calcHeight(ratio, width)}px`}
-                        />
-                      ))}
+                      {Object.values(ScreenWidths)
+                        .sort((a, b) => a - b)
+                        .map((width) => (
+                          <source
+                            media={MediaQueries[width]}
+                            srcset={`${element.src}?tr=${transform(width)}`}
+                            width={`${width}px`}
+                            height={`${calcHeight(ratio, width)}px`}
+                          />
+                        ))}
                       <img
                         src={`${element.src}?tr=${transform(ScreenWidths.XXL)}`}
                         title={element.title}
@@ -45,7 +47,11 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
                         height={`${calcHeight(ratio, ScreenWidths.XXL)}px`}
                         loading={element.loading ?? "lazy"}
                         fetchpriority={element.fetchpriority ?? "auto"}
-                        decoding={element.loading === "lazy" ? "async" : "auto"}
+                        decoding={
+                          (element.loading ?? "lazy") === "lazy"
+                            ? "async"
+                            : "auto"
+                        }
                       />
                     </picture>
                   );

@@ -39,14 +39,16 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
             return (
               <ShowcaseAsset id={element.id} href={`#gallery-${element.id}`}>
                 <picture>
-                  {Object.values(ScreenWidths).map((width) => (
-                    <source
-                      media={MediaQueries[width]}
-                      srcset={`${element.src}?tr=${transform(width)}`}
-                      width={`${width}px`}
-                      height={`${calcHeight(ratio, width)}px`}
-                    />
-                  ))}
+                  {Object.values(ScreenWidths)
+                    .sort((a, b) => a - b)
+                    .map((width) => (
+                      <source
+                        media={MediaQueries[width]}
+                        srcset={`${element.src}?tr=${transform(width)}`}
+                        width={`${width}px`}
+                        height={`${calcHeight(ratio, width)}px`}
+                      />
+                    ))}
                   <img
                     src={`${element.src}?tr=${transform(ScreenWidths.XXL)}`}
                     title={element.title}

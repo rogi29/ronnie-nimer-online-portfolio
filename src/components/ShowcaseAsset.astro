@@ -12,7 +12,7 @@ const { id, href } = Astro.props;
 <div class="showcase-asset" {id}>
   <slot />
   <div class="showcase-asset__actions">
-    <a {href}>
+    <a {href} aria-label="Presentation Mode">
       <Icon class="control" pack="mdi" name="fullscreen" />
     </a>
   </div>
