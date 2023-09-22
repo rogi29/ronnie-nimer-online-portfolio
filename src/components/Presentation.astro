@@ -26,7 +26,7 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
                 case ElementTag.IMG:
                   const ratio = element.originalHeight / element.originalWidth;
                   const transform = (w: number) =>
-                    `tr=w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
+                    `w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
                   return (
                     <picture>
                       {Object.values(ScreenWidths)
