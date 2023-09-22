@@ -2,6 +2,7 @@
 import Icon from "astro-icon";
 import gallery from "../data/gallery";
 import { ElementTag } from "../types/ElementMetadata";
+import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
 ---
 
 <div>
@@ -23,12 +24,30 @@ import { ElementTag } from "../types/ElementMetadata";
             {() => {
               switch (element.tag) {
                 case ElementTag.IMG:
+                  const ratio = element.originalHeight / element.originalWidth;
+                  const transform = (w: number) =>
+                    `tr=w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
                   return (
-                    <img
-                      src={element.src}
-                      alt={element.alt}
-                      title={element.title}
-                    />
+                    <picture>
+                      {Object.values(ScreenWidths).map((width) => (
+                        <source
+                          media={MediaQueries[width]}
+                          srcset={`${element.src}?tr=${transform(width)}`}
+                          width={`${width}px`}
+                          height={`${calcHeight(ratio, width)}px`}
+                        />
+                      ))}
+                      <img
+                        src={`${element.src}?tr=${transform(ScreenWidths.XXL)}`}
+                        title={element.title}
+                        alt={element.alt}
+                        width={`${ScreenWidths.XXL}px`}
+                        height={`${calcHeight(ratio, ScreenWidths.XXL)}px`}
+                        loading={element.loading ?? "lazy"}
+                        fetchpriority={element.fetchpriority ?? "auto"}
+                        decoding={element.loading === "lazy" ? "async" : "auto"}
+                      />
+                    </picture>
                   );
                 case ElementTag.VIDEO:
                   return (
@@ -119,6 +138,7 @@ import { ElementTag } from "../types/ElementMetadata";
     height: 100%;
   }
   .presentation__asset > img,
+  .presentation__asset > picture,
   .presentation__asset > video {
     display: block;
     width: auto;
@@ -126,6 +146,10 @@ import { ElementTag } from "../types/ElementMetadata";
     height: auto;
     max-height: 90vh;
     filter: drop-shadow(0 0 10px #0003);
+  }
+  .presentation__asset > picture > img {
+    width: 100%;
+    height: 100%;
   }
   @media (max-width: 1080px) {
     .presentation__asset > img,

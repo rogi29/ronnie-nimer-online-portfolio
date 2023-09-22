@@ -9,5 +9,7 @@
     }
   ],
   "astroAllowShorthand": true,
-  "singleQuote": false
+  "printWidth": 80,
+  "singleQuote": false,
+  "semi": true
 }

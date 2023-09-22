@@ -21,10 +21,14 @@ export type ElementMetadata =
     }
   | {
       tag: ElementTag.IMG;
-      src: string;
-      alt: string;
-      title: string;
       id: string;
+      src: string;
+      title: string;
+      alt: string;
+      originalWidth: number;
+      originalHeight: number;
+      loading?: HTMLImageElement["loading"];
+      fetchpriority?: "high" | "low" | "auto";
     }
   | {
       tag: ElementTag.VIDEO;
