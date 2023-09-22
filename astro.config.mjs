@@ -6,6 +6,10 @@ export default defineConfig({
   integrations: [
     AstroPWA({
       manifest: {
+        name: "Ronnie Nimer's Portfolio",
+        short_name: "Ronnie Nimer",
+        description: "Ronnie Nimer's Web Portfolio",
+        theme_color: "#222222",
         icons: [
           {
             src: "pwa-64x64.png",
