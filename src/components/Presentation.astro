@@ -32,8 +32,9 @@ import ResponsivePicture from "./ResponsivePicture.astro";
                       alt={element.alt}
                       width={element.originalWidth}
                       height={element.originalHeight}
-                      loading={element.loading}
-                      fetchpriority={element.fetchpriority}
+                      loading={"lazy"}
+                      fetchpriority={"auto"}
+                      size={3}
                     />
                   );
                 case ElementTag.VIDEO:

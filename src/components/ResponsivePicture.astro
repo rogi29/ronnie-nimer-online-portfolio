@@ -7,6 +7,7 @@ interface Props {
   alt: string;
   width: number;
   height: number;
+  size?: 1 | 2 | 3;
   loading?: "lazy" | "eager" | null;
   fetchpriority?: "high" | "low" | "auto";
 }
@@ -17,6 +18,7 @@ const {
   alt,
   width,
   height,
+  size = 1,
   loading = "lazy",
   fetchpriority = "auto",
 } = Astro.props;
@@ -30,7 +32,7 @@ const transform = (w: number) =>
 <picture>
   {
     widths.map((currentWidth, i) => {
-      const nextWidth = widths[i + 1] ?? width;
+      const nextWidth = widths[i + size - 1] ?? width;
       return (
         <source
           media={MediaQueries[currentWidth]}
