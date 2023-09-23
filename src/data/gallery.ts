@@ -1,4 +1,3 @@
-import { MediaQueries } from "../consts/theme";
 import { ElementTag, type ElementMetadata } from "../types/ElementMetadata";
 
 export default [

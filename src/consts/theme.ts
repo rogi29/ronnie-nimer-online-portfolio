@@ -1,7 +1,7 @@
 export const mq = (
   key: `${"min" | "max"}-${"width" | "height"}`,
-  value: ScreenWidth,
-): `${key}: ${value}px` => `(${key}: ${value}px)`;
+  value: number,
+): `(${typeof key}: ${typeof value}px)` => `(${key}: ${value}px)`;
 
 export const calcHeight = (ratio: number, width: number) =>
   Math.round(ratio * width);

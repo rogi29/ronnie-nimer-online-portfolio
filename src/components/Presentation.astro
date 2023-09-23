@@ -3,6 +3,7 @@ import Icon from "astro-icon";
 import gallery from "../data/gallery";
 import { ElementTag } from "../types/ElementMetadata";
 import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
+import ResponsivePicture from "./ResponsivePicture.astro";
 ---
 
 <div>
@@ -24,36 +25,16 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
             {() => {
               switch (element.tag) {
                 case ElementTag.IMG:
-                  const ratio = element.originalHeight / element.originalWidth;
-                  const transform = (w: number) =>
-                    `w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
                   return (
-                    <picture>
-                      {Object.values(ScreenWidths)
-                        .sort((a, b) => a - b)
-                        .map((width) => (
-                          <source
-                            media={MediaQueries[width]}
-                            srcset={`${element.src}?tr=${transform(width)}`}
-                            width={`${width}px`}
-                            height={`${calcHeight(ratio, width)}px`}
-                          />
-                        ))}
-                      <img
-                        src={`${element.src}?tr=${transform(ScreenWidths.XXL)}`}
-                        title={element.title}
-                        alt={element.alt}
-                        width={`${ScreenWidths.XXL}px`}
-                        height={`${calcHeight(ratio, ScreenWidths.XXL)}px`}
-                        loading={element.loading ?? "lazy"}
-                        fetchpriority={element.fetchpriority ?? "auto"}
-                        decoding={
-                          (element.loading ?? "lazy") === "lazy"
-                            ? "async"
-                            : "auto"
-                        }
-                      />
-                    </picture>
+                    <ResponsivePicture
+                      src={element.src}
+                      title={element.title}
+                      alt={element.alt}
+                      width={element.originalWidth}
+                      height={element.originalHeight}
+                      loading={element.loading}
+                      fetchpriority={element.fetchpriority}
+                    />
                   );
                 case ElementTag.VIDEO:
                   return (
@@ -143,8 +124,8 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
     width: 100%;
     height: 100%;
   }
-  .presentation__asset > img,
-  .presentation__asset > picture,
+  .presentation__asset > :global(img),
+  .presentation__asset > :global(picture),
   .presentation__asset > video {
     display: block;
     width: auto;
@@ -153,12 +134,12 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
     max-height: 90vh;
     filter: drop-shadow(0 0 10px #0003);
   }
-  .presentation__asset > picture > img {
+  .presentation__asset > :global(picture) > :global(img) {
     width: 100%;
     height: 100%;
   }
   @media (max-width: 1080px) {
-    .presentation__asset > img,
+    .presentation__asset > :global(picture),
     .presentation__asset > video {
       max-width: calc(100% - 1.5rem);
       max-height: 80vh;

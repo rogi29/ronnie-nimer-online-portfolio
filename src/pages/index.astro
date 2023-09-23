@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import portfolioData from "../data/portfolio.ts";
 import { ElementTag, type ElementMetadata } from "../types/ElementMetadata.ts";
 import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
+import ResponsivePicture from "../components/ResponsivePicture.astro";
 ---
 
 <Layout title="Ronnie Nimer's Portfolio">
@@ -33,33 +34,17 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
               </p>
             );
           case ElementTag.IMG:
-            const ratio = element.originalHeight / element.originalWidth;
-            const transform = (w: number) =>
-              `w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
             return (
               <ShowcaseAsset id={element.id} href={`#gallery-${element.id}`}>
-                <picture>
-                  {Object.values(ScreenWidths)
-                    .sort((a, b) => a - b)
-                    .map((width) => (
-                      <source
-                        media={MediaQueries[width]}
-                        srcset={`${element.src}?tr=${transform(width)}`}
-                        width={`${width}px`}
-                        height={`${calcHeight(ratio, width)}px`}
-                      />
-                    ))}
-                  <img
-                    src={`${element.src}?tr=${transform(ScreenWidths.XXL)}`}
-                    title={element.title}
-                    alt={element.alt}
-                    width={`${ScreenWidths.XXL}px`}
-                    height={`${calcHeight(ratio, ScreenWidths.XXL)}px`}
-                    loading={element.loading ?? "lazy"}
-                    fetchpriority={element.fetchpriority ?? "auto"}
-                    decoding={element.loading === "lazy" ? "async" : "auto"}
-                  />
-                </picture>
+                <ResponsivePicture
+                  src={element.src}
+                  title={element.title}
+                  alt={element.alt}
+                  width={element.originalWidth}
+                  height={element.originalHeight}
+                  loading={element.loading}
+                  fetchpriority={element.fetchpriority}
+                />
               </ShowcaseAsset>
             );
           case ElementTag.VIDEO:
@@ -140,7 +125,7 @@ import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
     text-align: center;
     color: #bbb;
   }
-  img {
+  main :global(img) {
     width: 100%;
     height: auto;
   }

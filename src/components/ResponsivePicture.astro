@@ -1,0 +1,56 @@
+---
+import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
+
+interface Props {
+  src: string;
+  title: string;
+  alt: string;
+  width: number;
+  height: number;
+  loading?: "lazy" | "eager" | null;
+  fetchpriority?: "high" | "low" | "auto";
+}
+
+const {
+  src,
+  title,
+  alt,
+  width,
+  height,
+  loading = "lazy",
+  fetchpriority = "auto",
+} = Astro.props;
+
+const ratio = height / width;
+const widths = Object.values(ScreenWidths).sort((a, b) => a - b);
+const transform = (w: number) =>
+  `w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
+---
+
+<picture>
+  {
+    widths.map((currentWidth, i) => {
+      const nextWidth = widths[i + 1] ?? width;
+      return (
+        <source
+          media={MediaQueries[currentWidth]}
+          srcset={`${src}?tr=${transform(nextWidth)}`}
+          width={`${nextWidth}px`}
+          height={`${calcHeight(ratio, nextWidth)}px`}
+        />
+      );
+    })
+  }
+  <img
+    {alt}
+    {title}
+    src={`${src}?tr=${transform(width)}`}
+    width={`${ScreenWidths.XXL}px`}
+    height={`${calcHeight(ratio, width)}px`}
+    {loading}
+    {fetchpriority}
+    decoding={loading === "lazy" ? "async" : "auto"}
+  />
+</picture>
+
+<style></style>
