@@ -7,7 +7,6 @@ export default [
     icon: {
       pack: "mdi",
       name: "artstation",
-      color: "#61cdff",
     },
   },
   {
@@ -16,7 +15,6 @@ export default [
     icon: {
       pack: "mdi",
       name: "linkedin",
-      color: "#61cdff",
     },
   },
   {
@@ -25,7 +23,6 @@ export default [
     icon: {
       pack: "mdi",
       name: "instagram",
-      color: "#61cdff",
     },
   },
 ] satisfies SocialLink[];
