@@ -44,6 +44,7 @@ import ResponsivePicture from "../components/ResponsivePicture.astro";
                   height={element.originalHeight}
                   loading={element.loading}
                   fetchpriority={element.fetchpriority}
+                  placeholder={"blur"}
                   size={2}
                 />
               </ShowcaseAsset>
@@ -54,7 +55,6 @@ import ResponsivePicture from "../components/ResponsivePicture.astro";
                 <video
                   poster={element.poster}
                   title={element.title}
-                  style="display:block; width: 100%; margin: 0; padding: 0;"
                   preload="auto"
                   playsinline={true}
                   autoplay={element.autoplay}
@@ -127,6 +127,13 @@ import ResponsivePicture from "../components/ResponsivePicture.astro";
     line-height: 1.75rem;
     text-align: center;
     color: #bbb;
+  }
+  main video {
+    display:block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
   }
   main :global(img) {
     width: 100%;

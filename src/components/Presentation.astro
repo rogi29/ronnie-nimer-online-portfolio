@@ -2,7 +2,6 @@
 import Icon from "astro-icon";
 import gallery from "../data/gallery";
 import { ElementTag } from "../types/ElementMetadata";
-import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
 import ResponsivePicture from "./ResponsivePicture.astro";
 ---
 
@@ -34,6 +33,7 @@ import ResponsivePicture from "./ResponsivePicture.astro";
                       height={element.originalHeight}
                       loading={"lazy"}
                       fetchpriority={"auto"}
+                      placeholder={"blur"}
                       size={3}
                     />
                   );
