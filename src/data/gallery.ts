@@ -106,12 +106,12 @@ export default [
     tag: ElementTag.VIDEO,
     src: [
       {
-        url: "https://ik.imagekit.io/8hod93w55/12.mp4",
-        type: "video/mp4",
-      },
-      {
         url: "https://ik.imagekit.io/8hod93w55/12.webm",
         type: "video/webm",
+      },
+      {
+        url: "https://ik.imagekit.io/8hod93w55/12.mp4",
+        type: "video/mp4",
       },
     ],
     poster: "https://ik.imagekit.io/8hod93w55/12.jpg",
