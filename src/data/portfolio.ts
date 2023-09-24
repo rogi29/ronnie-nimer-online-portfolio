@@ -104,4 +104,8 @@ export default [
   {
     ...gallery[13],
   },
+  {
+    tag: ElementTag.P,
+    textContent: "Final Design",
+  },
 ] satisfies ElementMetadata[];
