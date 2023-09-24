@@ -4,33 +4,48 @@
   <div class="message">
     <span id="toast-message"></span>
   </div>
-  <button id="pwa-refresh"> Reload</button>
-  <button id="pwa-close"> Close</button>
+  <button id="pwa-refresh">Reload</button>
+  <button id="pwa-close">Close</button>
 </div>
 
 <style>
   #pwa-toast {
     visibility: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     position: fixed;
+    width: 460px;
+    max-width: calc(100% - 2rem);
     right: 0;
     bottom: 0;
-    margin: 16px;
-    padding: 12px;
+    margin: 1rem;
+    padding: 1rem;
     border: 1px solid #8885;
     border-radius: 4px;
     z-index: 1;
-    text-align: left;
-    box-shadow: 3px 4px 5px 0 #8885;
+    text-align: start;
+    box-shadow: 3px 4px 5px #8885;
+    background: #ffffff77;
+    backdrop-filter: blur(15px);
   }
   #pwa-toast .message {
-    margin-bottom: 8px;
+    margin-bottom: 1rem;
+    color: #222222;
+    font-weight: 400;
+    width: 100%;
   }
   #pwa-toast button {
-    border: 1px solid #8885;
+    border: none;
     outline: none;
     margin-right: 5px;
     border-radius: 2px;
-    padding: 3px 10px;
+    padding: 0.75rem 1rem;
+    border-radius: 3px;
+    background: #444;
+    color: #eee;
+    font-family: Inter, sans-serif;
+    cursor: pointer;
   }
   #pwa-toast.show {
     visibility: visible;
