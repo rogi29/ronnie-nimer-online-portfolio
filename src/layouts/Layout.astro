@@ -10,19 +10,27 @@ import ReloadPrompt from "../components/ReloadPrompt.astro";
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- HTML Meta Tags -->
+    <title>Ronnie Nimer</title>
+    <meta name="theme-color" content="#222222" />
+    <meta name="generator" content={Astro.generator} />
     <meta name="description" content="Character Concept Artist Portfolio" />
-    <meta name="viewport" content="width=device-width" />
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://ronnienimer.art/" />
+    <meta property="og:type" content="website" />
     <meta property="og:title" content="Ronnie Nimer" />
     <meta
       property="og:description"
       content="Character Concept Artist Portfolio"
     />
-    <meta property="og:type" content="website" />
     <meta
       property="og:image"
       content="https://ik.imagekit.io/8hod93w55/social-metadata-image.jpg?tr=w-500,f-webp"
     />
-    <meta name="twitter:creator" content="@WizardTree_Myth" />
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="ronnienimer.art" />
+    <meta property="twitter:url" content="https://ronnienimer.art/" />
     <meta name="twitter:title" content="Ronnie Nimer" />
     <meta
       name="twitter:description"
@@ -32,8 +40,10 @@ import ReloadPrompt from "../components/ReloadPrompt.astro";
       name="twitter:image"
       content="https://ik.imagekit.io/8hod93w55/social-metadata-image.jpg?tr=w-500,f-webp"
     />
+    <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css?family=Inter&display=swap"
       rel="preload"
@@ -43,9 +53,7 @@ import ReloadPrompt from "../components/ReloadPrompt.astro";
       href="https://fonts.googleapis.com/css?family=Inter&display=swap"
       rel="stylesheet"
     />
-    <meta name="theme-color" content="#222222" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Ronnie Nimer</title>
+    <!-- PWA -->
     {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
   </head>
   <body>
