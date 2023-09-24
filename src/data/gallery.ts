@@ -104,7 +104,16 @@ export default [
   },
   {
     tag: ElementTag.VIDEO,
-    src: "https://ik.imagekit.io/8hod93w55/12.mp4",
+    src: [
+      {
+        url: "https://ik.imagekit.io/8hod93w55/12.mp4",
+        type: "video/mp4",
+      },
+      {
+        url: "https://ik.imagekit.io/8hod93w55/12.webm",
+        type: "video/webm",
+      },
+    ],
     poster: "https://ik.imagekit.io/8hod93w55/12.jpg",
     title: "The Two-Headed Gnome Game Production",
     id: "the-two-headed-gnome-game-production",

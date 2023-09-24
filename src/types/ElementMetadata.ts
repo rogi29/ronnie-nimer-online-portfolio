@@ -32,7 +32,7 @@ export type ElementMetadata =
     }
   | {
       tag: ElementTag.VIDEO;
-      src: string;
+      src: { url: string; type: string }[];
       poster: string;
       title: string;
       id: string;

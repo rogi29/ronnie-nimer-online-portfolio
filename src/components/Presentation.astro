@@ -40,14 +40,18 @@ import ResponsivePicture from "./ResponsivePicture.astro";
                 case ElementTag.VIDEO:
                   return (
                     <video
-                      src={element.src}
                       poster={element.poster}
                       title={element.title}
+                      playsinline={true}
                       autoplay={element.autoplay}
                       loop={element.loop}
                       controls
                       muted
-                    />
+                    >
+                      {element.src.map(({ url, type }) => (
+                        <source src={url} {type}></source>
+                      ))}
+                    </video>
                   );
               }
             }}

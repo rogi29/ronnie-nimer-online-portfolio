@@ -52,7 +52,6 @@ import ResponsivePicture from "../components/ResponsivePicture.astro";
             return (
               <ShowcaseAsset id={element.id} href={`#gallery-${element.id}`}>
                 <video
-                  src={element.src}
                   poster={element.poster}
                   title={element.title}
                   style="display:block; width: 100%; margin: 0; padding: 0;"
@@ -62,7 +61,11 @@ import ResponsivePicture from "../components/ResponsivePicture.astro";
                   loop={element.loop}
                   controls
                   muted
-                />
+                >
+                  {element.src.map(({ url, type }) => (
+                    <source src={url} {type}></source>
+                  ))}
+                </video>
               </ShowcaseAsset>
             );
         }
