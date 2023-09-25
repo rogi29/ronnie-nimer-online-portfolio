@@ -4,6 +4,9 @@ import Icon from "astro-icon";
 import socialLinksData from "../data/socialLinks.ts";
 import { type SocialLink } from "../types/SocialLink.ts";
 import ReloadPrompt from "../components/ReloadPrompt.astro";
+import deliverable from "../data/deliverable";
+import JsonLdConceptArt from "../components/JsonLdConceptArt.astro";
+import type { ElementMetadata } from "../types/ElementMetadata";
 ---
 
 <!doctype html>
@@ -54,6 +57,8 @@ import ReloadPrompt from "../components/ReloadPrompt.astro";
       href="https://fonts.googleapis.com/css?family=Inter&display=swap"
       rel="stylesheet"
     />
+    <!-- Structured Data -->
+    {deliverable.map((data) => <JsonLdConceptArt {...data} />)}
     <!-- PWA -->
     {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
   </head>
