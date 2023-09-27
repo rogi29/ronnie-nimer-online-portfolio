@@ -10,7 +10,11 @@ import ResponsivePicture from "./ResponsivePicture.astro";
     gallery.map((element, index) => (
       <div class="presentation" id={`gallery-${element.id}`}>
         <div class="presentation__inner">
-          <a class="presentation__close" href={`#${element.id}`}>
+          <a
+            class="presentation__close"
+            href={`#${element.id}`}
+            aria-label={`Exit presentation mode to ${element.title}`}
+          >
             <Icon
               pack="mdi"
               name="close"
@@ -18,6 +22,7 @@ import ResponsivePicture from "./ResponsivePicture.astro";
               width="2.25rem"
               color="#111111dd"
               style="background:#ffffff99;"
+              aria-hidden="true"
             />
           </a>
           <div class="presentation__asset">
