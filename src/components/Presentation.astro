@@ -60,6 +60,7 @@ import ResponsivePicture from "./ResponsivePicture.astro";
             <a
               class="presentation__prev"
               href={`#gallery-${gallery[Math.max(index - 1, 0)].id}`}
+              aria-label={`Return to ${gallery[Math.min(index - 1, 0)].title}`}
             >
               <Icon
                 pack="mdi"
@@ -68,6 +69,7 @@ import ResponsivePicture from "./ResponsivePicture.astro";
                 width="3.125rem"
                 color="#ffffffcc"
                 style="background:#22222299;"
+                aria-hidden="true"
               />
             </a>
           )}
@@ -77,6 +79,7 @@ import ResponsivePicture from "./ResponsivePicture.astro";
               href={`#gallery-${
                 gallery[Math.min(index + 1, gallery.length - 1)].id
               }`}
+              aria-label={`Go to ${gallery[Math.min(index + 1, gallery.length - 1)].title}`}
             >
               <Icon
                 pack="mdi"
@@ -85,6 +88,7 @@ import ResponsivePicture from "./ResponsivePicture.astro";
                 width="3.125rem"
                 color="#ffffffcc"
                 style="background:#22222299;"
+                aria-hidden="true"
               />
             </a>
           )}

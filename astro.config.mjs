@@ -8,7 +8,7 @@ export default defineConfig({
       manifest: {
         name: "Ronnie Nimer's Portfolio",
         short_name: "Ronnie Nimer",
-        description: "Ronnie Nimer's Web Portfolio",
+        description: "Character Concept Artist Portfolio",
         theme_color: "#222222",
         icons: [
           {

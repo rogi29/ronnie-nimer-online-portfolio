@@ -65,7 +65,7 @@ import type { ElementMetadata } from "../types/ElementMetadata";
   <body>
     <slot name="background" />
     <header>
-      <div class="profile">
+      <figure class="profile">
         <img
           src="https://ik.imagekit.io/8hod93w55/tr:w-262,h-262,q-100/ronnie-profile.jpg"
           alt="Ronnie Nimer"
@@ -75,7 +75,7 @@ import type { ElementMetadata } from "../types/ElementMetadata";
           loading="eager"
           decoding="auto"
         />
-      </div>
+      </figure>
 
       <div class="artist">
         <p class="fullname">Ronnie Nimer</p>
@@ -85,11 +85,18 @@ import type { ElementMetadata } from "../types/ElementMetadata";
       <nav aria-label="header social links">
         {
           socialLinksData.map(({ href, title, icon }: SocialLink) => (
-            <a href={href} title={title} class="socialLink" target="_blank">
+            <a
+              href={href}
+              title={title}
+              aria-label={`Header link to ${title}`}
+              class="socialLink"
+              target="_blank"
+            >
               <Icon
                 pack={icon.pack}
                 name={icon.name}
                 color={icon.color ?? "#61cdff"}
+                aria-hidden="true"
               />
             </a>
           ))
@@ -112,11 +119,18 @@ import type { ElementMetadata } from "../types/ElementMetadata";
       <nav aria-label="footer social links">
         {
           socialLinksData.map(({ href, title, icon }: SocialLink) => (
-            <a href={href} title={title} class="socialLink" target="_blank">
+            <a
+              href={href}
+              title={title}
+              aria-label={`Footer link to ${title}`}
+              class="socialLink"
+              target="_blank"
+            >
               <Icon
                 pack={icon.pack}
                 name={icon.name}
                 color={icon.color ?? "#ffffff"}
+                aria-hidden="true"
               />
             </a>
           ))
@@ -158,10 +172,12 @@ import type { ElementMetadata } from "../types/ElementMetadata";
     z-index: 1;
   }
   header .profile {
+    display: block;
     border-radius: 50%;
     overflow: hidden;
     width: 55px;
     height: 55px;
+    margin: 0;
   }
   header .artist {
     flex-grow: 1;
