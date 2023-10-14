@@ -43,6 +43,7 @@ let links: string[] = [];
         (entry?.data?.blocks ?? [])
           .filter((block) => block["@type"] === "@builder.io/sdk:Element")
           .map((block) => {
+                console.log(block)
             const options = block.component?.options ?? {};
             const externalTarget = block.properties?.target;
             const externalLink = block.properties?.href;
@@ -66,6 +67,10 @@ let links: string[] = [];
               case "custom code":
                 return (
                   <Fragment set:html={block.component?.options?.code ?? ""} />
+                );
+              case "core:button":
+                return (
+                  <a href={options?.link ?? ""} role="button">{options?.text ?? ""}</a>
                 );
               case "video":
                 links.push(imagelink);

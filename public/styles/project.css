@@ -62,48 +62,19 @@ main img {
   width: 100%;
   height: auto;
 }
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100%;
-  z-index: -1;
-  opacity: 0.25;
-  filter: saturate(0.5) brightness(0.7);
-  background: linear-gradient(
-    180deg,
-    #555 0px,
-    #222 155px,
-    #161616 275px,
-    #161616 500px,
-    #1d1b21 650px,
-    #312f43 900px,
-    #50475b 1100px,
-    #b78d66 1250px,
-    #b78d66 1400px,
-    #595d4b 1550px,
-    #4d513c 1600px,
-    #595959 1700px,
-    #777 2000px,
-    #222 3500px,
-    #444,
-    #111,
-    #222,
-    #333
-  );
+main a[role="button"] {
+  margin: 0 !important;
+  padding: 0.25rem 0.75rem !important;
+  font-size: 1.25rem !important;
+  font-family: Inter, sans-serif !important;
+  text-decoration: none !important;
+  color: #fff !important;
+  border: 2px solid #eee !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-@media (max-width: 1080px) {
-  .background {
-    background: linear-gradient(
-      180deg,
-      #555 0px,
-      #333 155px,
-      #222 275px,
-      #222,
-      #111,
-      #222,
-      #333
-    );
-  }
+main a[role="button"]:hover {
+  border: 2px solid #999 !important;
 }
