@@ -43,9 +43,9 @@ h4 {
   color: #bbb;
 }
 main p {
-  width: 90% !important;
+  width: 100% !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 0 10vw !important;
   font-size: 1.125rem !important;
   line-height: 1.75rem !important;
   text-align: center !important;

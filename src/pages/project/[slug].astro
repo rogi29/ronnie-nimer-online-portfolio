@@ -54,6 +54,13 @@ let links: string[] = [];
 
             switch (block.component?.name?.toLowerCase()) {
               case "text":
+                if (block.tagName === "paragraph") {
+                  return (
+                    <div>
+                      <Fragment set:html={block.component?.options?.text ?? ""} />
+                    </div>
+                  )
+                }
                 return (
                   <Fragment set:html={block.component?.options?.text ?? ""} />
                 );
