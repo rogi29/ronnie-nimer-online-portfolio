@@ -9,7 +9,7 @@ const PROJECT_MODEL_ID = "gallery";
 const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
 
 const url = `https://${DOMAIN_NAME}/`;
-const entry: BuilderContent = await builder.get(PROJECT_MODEL_ID, {
+const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
   url: `/index`,
   cachebust: true,
   apiKey: BUILDER_API_KEY,
@@ -25,7 +25,7 @@ const entry: BuilderContent = await builder.get(PROJECT_MODEL_ID, {
   <main>
     <div class="gallery">
       {
-        (entry.data?.blocks ?? [])
+        (entry?.data?.blocks ?? [])
           .filter((block) => block["@type"] === "@builder.io/sdk:Element")
           .map((block) => {
             switch (block?.component?.name?.toLowerCase()) {

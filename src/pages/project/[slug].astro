@@ -26,7 +26,7 @@ const { slug } = Astro.params;
 const { title, description, image } = Astro.props;
 
 const url = `https://${DOMAIN_NAME}/project/${slug}`;
-const entry: BuilderContent = await builder.get(PROJECT_MODEL_ID, {
+const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
   url: `/${slug}`,
   cachebust: true,
   apiKey: BUILDER_API_KEY,
@@ -41,7 +41,7 @@ let links: string[] = [];
   <main slot="main">
     <>
       {
-        (entry.data?.blocks ?? [])
+        (entry?.data?.blocks ?? [])
           .filter((block) => block["@type"] === "@builder.io/sdk:Element")
           .map((block) => {
             const options = block.component?.options ?? {};
