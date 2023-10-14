@@ -32,7 +32,6 @@ const entry: BuilderContent = await builder.get(PROJECT_MODEL_ID, {
           .map((block) => {
             switch (block?.component?.name?.toLowerCase()) {
               case "image":
-                console.log(block);
                 const link = block?.properties?.href ?? "#";
                 const description = block?.properties?.description ?? "";
                 const options = block?.component?.options ?? {};
