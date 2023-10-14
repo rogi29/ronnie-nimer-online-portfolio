@@ -28,6 +28,7 @@ const props = Astro.props;
     <Metadata {...props} />
   </head>
   <body>
+    <slot name="background" />
     <Header />
     <slot name="main" />
     <ProjectFooter />
