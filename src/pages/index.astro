@@ -1,187 +1,72 @@
 ---
-import ShowcaseAsset from "../components/ShowcaseAsset.astro";
-import Presentation from "../components/Presentation.astro";
-import Layout from "../layouts/Layout.astro";
-import portfolioData from "../data/portfolio.ts";
-import { ElementTag, type ElementMetadata } from "../types/ElementMetadata.ts";
-import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
+export const prerender = true;
+
+import { builder, type BuilderContent } from "@builder.io/sdk";
+import { DOMAIN_NAME } from "../consts/site";
+import GalleryLayout from "../layouts/GalleryLayout.astro";
 import ResponsivePicture from "../components/ResponsivePicture.astro";
+import JsonLdConceptArt from "../components/JsonLdConceptArt.astro";
+
+const PROJECT_MODEL_ID = "gallery";
+const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
+
+const url = `https://${DOMAIN_NAME}/`;
+const entry: BuilderContent = await builder.get(PROJECT_MODEL_ID, {
+  url: `/index`,
+  cachebust: true,
+  apiKey: BUILDER_API_KEY,
+});
 ---
 
-<Layout>
-  <div slot="background" class="background"></div>
-  <main slot="main">
-    {
-      portfolioData.map((element: ElementMetadata) => {
-        switch (element.tag) {
-          case ElementTag.H1:
-            return <h1>{element.textContent ?? ""}</h1>;
-          case ElementTag.H2:
-            return <h2>{element.textContent ?? ""}</h2>;
-          case ElementTag.H3:
-            return <h3>{element.textContent ?? ""}</h3>;
-          case ElementTag.H4:
-            return <h4>{element.textContent ?? ""}</h4>;
-          case ElementTag.P:
-            return (
-              <p>
-                {(element.textContent ?? "").split("\n").map((text) => (
-                  <span>
-                    {text}
-                    <br />
-                  </span>
-                ))}
-              </p>
-            );
-          case ElementTag.IMG:
-            return (
-              <ShowcaseAsset id={element.id} href={`#gallery-${element.id}`}>
-                <ResponsivePicture
-                  src={element.src}
-                  title={element.title}
-                  alt={element.alt}
-                  width={element.originalWidth}
-                  height={element.originalHeight}
-                  loading={element.loading}
-                  fetchpriority={element.fetchpriority}
-                  placeholder={"blur"}
-                  size={2}
-                />
-              </ShowcaseAsset>
-            );
-          case ElementTag.VIDEO:
-            return (
-              <ShowcaseAsset id={element.id} href={`#gallery-${element.id}`}>
-                <video
-                  poster={element.poster}
-                  title={element.title}
-                  playsinline={true}
-                  preload="none"
-                  autoplay={element.autoplay}
-                  loop={element.loop}
-                  controls
-                  muted
-                >
-                  {element.src.map(({ url, type }) => (
-                    <source src={url} {type}></source>
-                  ))}
-                </video>
-              </ShowcaseAsset>
-            );
-        }
-      })
-    }
-    <Presentation />
+<GalleryLayout
+  title={entry?.data?.title ?? ""}
+  description={entry?.data?.description ?? ""}
+  image={entry?.data?.image ?? ""}
+  {url}
+>
+  <main>
+    <div class="gallery">
+      {
+        (entry.data?.blocks ?? [])
+          .filter((block) => block["@type"] === "@builder.io/sdk:Element")
+          .map((block) => {
+            switch (block?.component?.name?.toLowerCase()) {
+              case "image":
+                console.log(block);
+                const link = block?.properties?.href ?? "#";
+                const description = block?.properties?.description ?? "";
+                const options = block?.component?.options ?? {};
+                return (
+                  <>
+                    <a href={link}>
+                      <figure>
+                        <ResponsivePicture
+                          src={options.image}
+                          title={options.altText}
+                          alt={options.altText}
+                          width={options.width}
+                          height={options.height}
+                          loading={options.lazy ? "lazy" : "eager"}
+                          fetchpriority={"high"}
+                          placeholder={"blur"}
+                          size={2}
+                        />
+                        <figcaption>
+                          <h1>{options.altText}</h1>
+                          <p>{description}</p>
+                        </figcaption>
+                      </figure>
+                    </a>
+                    <JsonLdConceptArt
+                      name={options.altText}
+                      image={options.image}
+                      {description}
+                    />
+                  </>
+                );
+            }
+          })
+      }
+    </div>
   </main>
-</Layout>
-
-<style>
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: calc(100% - 2.5rem);
-    max-width: 1025px;
-    margin: 0 auto;
-    gap: 1.25rem;
-  }
-  h1,
-  h2,
-  h3,
-  h4 {
-    width: 100%;
-    font-family: Inter, sans-serif;
-  }
-  h1 {
-    margin: 2rem 0 0;
-    font-size: 2.75rem;
-    font-weight: 600;
-    text-align: center;
-    color: #fff;
-  }
-  h2 {
-    margin: 0 0 2rem;
-    font-size: 1.625rem;
-    font-weight: 400;
-    text-align: center;
-    color: #bbb;
-  }
-  h3 {
-    margin: 0.75rem 0 0;
-    font-size: 2rem;
-    font-weight: 500;
-    text-align: start;
-    color: #fff;
-  }
-  h4 {
-    margin: 0;
-    font-size: 1.375rem;
-    font-weight: 400;
-    text-align: start;
-    color: #bbb;
-  }
-  p {
-    width: 90%;
-    margin: 0 0 2rem;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    text-align: center;
-    color: #bbb;
-  }
-  main video {
-    display:block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background: #ffffff;
-  }
-  main :global(img) {
-    width: 100%;
-    height: auto;
-  }
-  .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100%;
-    z-index: -1;
-    opacity: 0.25;
-    filter: saturate(0.5) brightness(0.7);
-    background: linear-gradient(
-      180deg,
-      #555 0px,
-      #222 155px,
-      #161616 275px,
-      #161616 500px,
-      #1d1b21 650px,
-      #312f43 900px,
-      #50475b 1100px,
-      #b78d66 1250px,
-      #b78d66 1400px,
-      #595d4b 1550px,
-      #4d513c 1600px,
-      #595959 1700px,
-      #777 2000px,
-      #222 3500px,
-      #444,
-      #111,
-      #222,
-      #333
-    );
-  }
-  @media (max-width: 1080px) {
-    .background {
-      background: linear-gradient(
-        180deg,
-        #555 0px,
-        #333 155px,
-        #222 275px,
-        #222,
-        #111,
-        #222,
-        #333
-      );
-    }
-  }
-</style>
+</GalleryLayout>

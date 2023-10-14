@@ -1,0 +1,46 @@
+---
+import Icon from "astro-icon";
+import type { SocialLink } from "../types/SocialLink";
+
+interface Props extends SocialLink {
+  class?: string;
+  ariaLabel: string;
+}
+
+const { href, title, icon, class: className, ariaLabel } = Astro.props;
+---
+
+<a
+  {href}
+  {title}
+  class={className}
+  aria-label={ariaLabel}
+  class="socialLink"
+  target="_blank"
+>
+  <Icon
+    pack={icon.pack}
+    name={icon.name}
+    color={icon.color ?? "#ffffff"}
+    aria-hidden="true"
+  />
+</a>
+
+<style>
+  a {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+  }
+  svg {
+    transition: color ease-in-out 0.2s;
+    color: color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 90%,
+      rgb(var(--backgroundColor))
+    );
+  }
+  a:hover svg {
+    color: rgb(var(--primaryColor));
+  }
+</style>

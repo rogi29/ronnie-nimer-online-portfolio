@@ -3,5 +3,5 @@
   "editor.tabSize": 2,
   "prettier.documentSelectors": ["**/*.astro", "**/*.ts"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["astro", "imagekit", "tsconfigs"]
+  "cSpell.words": ["astro", "imagekit", "ronnienimer", "tsconfigs"]
 }

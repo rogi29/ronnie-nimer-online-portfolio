@@ -1,0 +1,37 @@
+---
+import "../styles/main.css";
+import ReloadPrompt from "../components/ReloadPrompt.astro";
+import Header from "../components/Header.astro";
+import Metadata from "../components/Metadata.astro";
+import type { Props as MetadataProps } from "../components/Metadata.astro";
+import ProjectFooter from "../components/ProjectFooter.astro";
+
+interface Props extends MetadataProps {}
+
+const props = Astro.props;
+---
+
+<style>
+  body {
+    margin: 0;
+    width: 100%;
+    background: #222222;
+    position: relative;
+  }
+</style>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{props.title}</title>
+    <link rel="stylesheet" href="/styles/project.css" />
+    <Metadata {...props} />
+  </head>
+  <body>
+    <slot name="background" />
+    <Header />
+    <slot name="main" />
+    <ProjectFooter />
+    <ReloadPrompt />
+  </body>
+</html>

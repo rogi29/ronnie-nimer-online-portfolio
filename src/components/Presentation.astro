@@ -1,106 +1,121 @@
 ---
 import Icon from "astro-icon";
-import gallery from "../data/gallery";
-import { ElementTag } from "../types/ElementMetadata";
+import {
+  ElementTag,
+  type ImageMetadata,
+  type VideoMetadata,
+} from "../types/ElementMetadata";
 import ResponsivePicture from "./ResponsivePicture.astro";
+
+interface Props {
+  index: number;
+  element: ImageMetadata | VideoMetadata;
+  links: string[];
+}
+
+const { index, element, links } = Astro.props;
+
+const currLink = links[index] ?? ""
+const prevLink = links[Math.max(index - 1, 0)] ?? ""
+const nextLink = links[Math.min(index + 1, links.length - 1)] ?? ""
 ---
 
 <div>
-  {
-    gallery.map((element, index) => (
-      <div class="presentation" id={`gallery-${element.id}`}>
-        <div class="presentation__inner">
+  <div class="presentation" id={`gallery-${currLink}`}>
+    <div class="presentation__inner">
+      <a
+        class="presentation__close"
+        href={`#${currLink}`}
+        aria-label={`Exit presentation mode to ${element.title}`}
+      >
+        <Icon
+          pack="mdi"
+          name="close"
+          class="presentation__icon"
+          width="2.25rem"
+          color="#111111dd"
+          style="background:#ffffff99;"
+          aria-hidden="true"
+        />
+      </a>
+      <div class="presentation__asset">
+        {
+          () => {
+            switch (element.tag) {
+              case ElementTag.IMG:
+                return (
+                  <ResponsivePicture
+                    src={element.src}
+                    title={element.title}
+                    alt={element.alt}
+                    width={element.originalWidth}
+                    height={element.originalHeight}
+                    loading={"lazy"}
+                    fetchpriority={"auto"}
+                    placeholder={"blur"}
+                    size={3}
+                  />
+                );
+              case ElementTag.VIDEO:
+                return (
+                  <video
+                    poster={element.poster}
+                    title={element.title}
+                    playsinline={true}
+                    autoplay={element.autoplay}
+                    loop={element.loop}
+                    controls={element.controls}
+                    muted
+                  >
+                    {element.src.map(({ url, type }) => (
+                      <source src={url} type={type}></source>
+                    ))}
+                  </video>
+                );
+            }
+          }
+        }
+      </div>
+      {
+        index > 0 && (
           <a
-            class="presentation__close"
-            href={`#${element.id}`}
-            aria-label={`Exit presentation mode to ${element.title}`}
+            class="presentation__prev"
+            href={`#gallery-${prevLink}`}
+            aria-label={`Return to ${prevLink}`}
           >
             <Icon
               pack="mdi"
-              name="close"
+              name="arrow-left-circle"
               class="presentation__icon"
-              width="2.25rem"
-              color="#111111dd"
-              style="background:#ffffff99;"
+              width="3.125rem"
+              color="#ffffffcc"
+              style="background:#22222299;"
               aria-hidden="true"
             />
           </a>
-          <div class="presentation__asset">
-            {() => {
-              switch (element.tag) {
-                case ElementTag.IMG:
-                  return (
-                    <ResponsivePicture
-                      src={element.src}
-                      title={element.title}
-                      alt={element.alt}
-                      width={element.originalWidth}
-                      height={element.originalHeight}
-                      loading={"lazy"}
-                      fetchpriority={"auto"}
-                      placeholder={"blur"}
-                      size={3}
-                    />
-                  );
-                case ElementTag.VIDEO:
-                  return (
-                    <video
-                      poster={element.poster}
-                      title={element.title}
-                      playsinline={true}
-                      autoplay={element.autoplay}
-                      loop={element.loop}
-                      controls
-                      muted
-                    >
-                      {element.src.map(({ url, type }) => (
-                        <source src={url} {type}></source>
-                      ))}
-                    </video>
-                  );
-              }
-            }}
-          </div>
-          {index > 0 && (
-            <a
-              class="presentation__prev"
-              href={`#gallery-${gallery[Math.max(index - 1, 0)].id}`}
-              aria-label={`Return to ${gallery[Math.min(index - 1, 0)].title}`}
-            >
-              <Icon
-                pack="mdi"
-                name="arrow-left-circle"
-                class="presentation__icon"
-                width="3.125rem"
-                color="#ffffffcc"
-                style="background:#22222299;"
-                aria-hidden="true"
-              />
-            </a>
-          )}
-          {index < gallery.length - 1 && (
-            <a
-              class="presentation__next"
-              href={`#gallery-${
-                gallery[Math.min(index + 1, gallery.length - 1)].id
-              }`}
-              aria-label={`Go to ${gallery[Math.min(index + 1, gallery.length - 1)].title}`}
-            >
-              <Icon
-                pack="mdi"
-                name="arrow-right-circle"
-                class="presentation__icon"
-                width="3.125rem"
-                color="#ffffffcc"
-                style="background:#22222299;"
-                aria-hidden="true"
-              />
-            </a>
-          )}
-        </div>
-      </div>
-    ))
-  }
+        )
+      }
+      {
+        index < links.length - 1 && (
+          <a
+            class="presentation__next"
+            href={`#gallery-${nextLink}`}
+            aria-label={`Go to ${nextLink}`}
+          >
+            <Icon
+              pack="mdi"
+              name="arrow-right-circle"
+              class="presentation__icon"
+              width="3.125rem"
+              color="#ffffffcc"
+              style="background:#22222299;"
+              aria-hidden="true"
+            />
+          </a>
+        )
+      }
+    </div>
+  </div>
 </div>
 
 <style>

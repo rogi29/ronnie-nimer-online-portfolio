@@ -11,6 +11,7 @@ interface Props {
   loading?: "lazy" | "eager" | null;
   fetchpriority?: "high" | "low" | "auto";
   placeholder?: "blur" | null;
+  class?: string;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   loading = "lazy",
   fetchpriority = "auto",
   placeholder = null,
+  class: className,
 } = Astro.props;
 
 const thumbnailWidth = 25;
@@ -42,7 +44,7 @@ switch (placeholder) {
 }
 ---
 
-<picture {style}>
+<picture class={className} {style}>
   {
     widths.map((currentWidth, i) => {
       const nextWidth = widths[i + size - 1] ?? width;

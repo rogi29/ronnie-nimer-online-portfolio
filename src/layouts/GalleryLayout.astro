@@ -1,0 +1,27 @@
+---
+import "../styles/main.css";
+import ReloadPrompt from "../components/ReloadPrompt.astro";
+import Header from "../components/Header.astro";
+import Metadata from "../components/Metadata.astro";
+import type { Props as MetadataProps } from "../components/Metadata.astro";
+import GalleryFooter from "../components/GalleryFooter.astro";
+
+interface Props extends MetadataProps {}
+
+const props = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{props.title}</title>
+    <link rel="stylesheet" href="/styles/gallery.css" />
+    <Metadata {...props} />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <GalleryFooter />
+    <ReloadPrompt />
+  </body>
+</html>

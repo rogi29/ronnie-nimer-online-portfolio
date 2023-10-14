@@ -1,0 +1,155 @@
+---
+export const prerender = true;
+
+import { builder, type BuilderContent } from "@builder.io/sdk";
+import ResponsivePicture from "../../components/ResponsivePicture.astro";
+import ShowcaseAsset from "../../components/ShowcaseAsset.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import { DOMAIN_NAME } from "../../consts/site";
+import Presentation from "../../components/Presentation.astro";
+import { ElementTag, type ImageMetadata, type VideoMetadata } from "../../types/ElementMetadata";
+
+export const PROJECT_MODEL_ID = "project";
+export const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
+
+export async function getStaticPaths({}) {
+  const pages = await builder.getAll(PROJECT_MODEL_ID, {
+    fields: "data",
+    options: { noTargeting: true },
+    apiKey: BUILDER_API_KEY,
+  });
+  return pages.map(({ data }) => ({
+    params: { slug: data?.url?.replace("/", "") },
+    props: data,
+  }));
+}
+
+const { slug } = Astro.params;
+const { title, description, image } = Astro.props;
+
+const url = `https://${DOMAIN_NAME}/project/${slug}`;
+const entry: BuilderContent = await builder.get(PROJECT_MODEL_ID, {
+  url: `/${slug}`,
+  cachebust: true,
+  apiKey: BUILDER_API_KEY,
+});
+
+let galleryIndex = -1;
+let links: string[] = [];
+---
+
+<ProjectLayout {title} {description} {image} {url}>
+  <div slot="background" class="background"></div>
+  <main slot="main">
+    <>
+      {
+        (entry.data?.blocks ?? [])
+          .filter((block) => block["@type"] === "@builder.io/sdk:Element")
+          .map((block) => {
+            const options = block.component?.options ?? {};
+            const externalTarget = block.properties?.target;
+            const externalLink = block.properties?.href;
+            const imagelink = (options.altText ?? block.properties?.alt ?? "")
+              .toLowerCase()
+              .replaceAll(" ", "-");
+            const presentationLink = `#gallery-${imagelink}`;
+
+            switch (block.component?.name?.toLowerCase()) {
+              case "text":
+                return (
+                  <Fragment set:html={block.component?.options?.text ?? ""} />
+                );
+              case "custom code":
+                return (
+                  <Fragment set:html={block.component?.options?.code ?? ""} />
+                );
+              case "video":
+                links.push(imagelink);
+                galleryIndex++;
+
+                const srcSplit = options.video?.split(".")
+                const videoExt = srcSplit ? srcSplit[srcSplit.length - 1] : "webp"
+                const video: VideoMetadata = {
+                  tag: ElementTag.VIDEO,
+                  src: [{ url: options.video, type: `video/${videoExt}` }],
+                  poster: options.poster,
+                  title: block.properties?.alt ?? "",
+                  id: block.properties?.alt ?? "",
+                  autoplay: options.autoPlay ?? false,
+                  loop: options.loop ?? false,
+                  controls: options.controls ?? false
+                }
+                return (
+                  <ShowcaseAsset
+                    id={imagelink}
+                    {presentationLink}
+                    {externalLink}
+                    {externalTarget}
+                  >
+                    <video
+                      poster={video.poster}
+                      title={video.title}
+                      playsinline={true}
+                      preload="none"
+                      autoplay={video.autoplay}
+                      loop={video.loop}
+                      controls={video.controls}
+                      muted
+                    >
+                      {video.src.map(({ url, type }) => (
+                        <source src={url} {type}></source>
+                      ))}
+                    </video>
+                    <Presentation
+                      index={galleryIndex}
+                      element={video}
+                      links={links}
+                    />
+                  </ShowcaseAsset>
+                );
+              case "image":
+                links.push(imagelink);
+                galleryIndex++;
+
+                const image: ImageMetadata = {
+                  tag: ElementTag.IMG,
+                  id: options.altText,
+                  src: options.image,
+                  title: options.altText,
+                  alt: options.altText,
+                  originalWidth: options.width,
+                  originalHeight: options.height,
+                  loading: options.lazy ? "lazy" : "eager",
+                  fetchpriority: galleryIndex === -1 ? "high" : "auto",
+                };
+                return (
+                  <ShowcaseAsset
+                    id={imagelink}
+                    {presentationLink}
+                    {externalLink}
+                    {externalTarget}
+                  >
+                    <ResponsivePicture
+                      src={image.src}
+                      title={image.title}
+                      alt={image.alt}
+                      width={image.originalWidth}
+                      height={image.originalHeight}
+                      loading={image.loading}
+                      fetchpriority={image.fetchpriority}
+                      placeholder={"blur"}
+                      size={2}
+                    />
+                    <Presentation
+                      index={galleryIndex}
+                      element={image}
+                      links={links}
+                    />
+                  </ShowcaseAsset>
+                );
+            }
+          })
+      }
+    </>
+  </main>
+</ProjectLayout>

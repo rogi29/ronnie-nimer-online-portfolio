@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box !important;
+}
+
+:root {
+  --backgroundColor: 34, 34, 34;
+  --foregroundColor: 255, 255, 255;
+  --primaryColor: 97, 205, 255;
+  --fontSize: 16px;
+}
+
+@media (max-width: 1080px) {
+  :root {
+    --fontSize: 14px;
+  }
+}
+
+html {
+  font-size: var(--fontSize);
+  font-family: Inter, sans-serif;
+}

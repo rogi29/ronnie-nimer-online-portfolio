@@ -1,0 +1,65 @@
+---
+export const prerender = false;
+
+import { DOMAIN_NAME } from "../../../consts/site.ts";
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+import GalleryLayout from "../../../layouts/GalleryLayout.astro";
+
+const apiKey = import.meta.env.BUILDER_API_PUBLIC_KEY;
+const { slug, model } = Astro.params;
+---
+
+{
+  (() => {
+    switch (model) {
+      case "gallery":
+        return (
+          <GalleryLayout
+            title={`Preview ${slug}`}
+            description="Preview Gallery"
+            url={`https://${DOMAIN_NAME}/preview/${model}/${slug}`}
+            image=""
+          >
+            <main>
+              <builder-component {model} api-key={apiKey} />
+              <dialog open>PREVIEW MODE</dialog>
+              <script async src="https://cdn.builder.io/js/webcomponents" />
+            </main>
+          </GalleryLayout>
+        );
+      case "project":
+        return (
+          <ProjectLayout
+            title={`Preview ${slug}`}
+            description="Preview Project"
+            url={`https://${DOMAIN_NAME}/preview/${model}/${slug}`}
+            image=""
+          >
+            <div slot="background" class="background" />
+            <main slot="main">
+              <builder-component {model} api-key={apiKey} />
+              <dialog open>PREVIEW MODE</dialog>
+              <script async src="https://cdn.builder.io/js/webcomponents" />
+            </main>
+          </ProjectLayout>
+        );
+    }
+  })()
+}
+
+<style>
+  builder-component {
+    display: block;
+    width: 100%;
+  }
+  dialog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    border: none;
+    width: 100%;
+    background: #333;
+    color: #111;
+  }
+</style>
