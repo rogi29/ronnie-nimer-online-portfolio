@@ -1,11 +1,9 @@
 import { defineConfig } from "astro/config";
 import AstroPWA from "@vite-pwa/astro";
-import netlify from "@astrojs/netlify/functions";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
-  adapter: netlify({}),
+  output: "static",
   integrations: [
     AstroPWA({
       manifest: {

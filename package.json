@@ -12,7 +12,6 @@
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
-    "@astrojs/netlify": "^3.0.2",
     "@builder.io/sdk": "^2.0.8",
     "@builder.io/sdk-qwik": "^0.6.2",
     "astro": "^3.1.0",
