@@ -1,32 +1,18 @@
 ---
 import { builder } from "@builder.io/sdk";
-import { DOMAIN_NAME } from "../../../consts/site";
-import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+import { DOMAIN_NAME } from "../../consts/site";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
 export const PROJECT_MODEL_ID = "project";
 export const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
-
-export async function getStaticPaths({}) {
-  const pages = await builder.getAll(PROJECT_MODEL_ID, {
-    fields: "data",
-    options: { noTargeting: true },
-    apiKey: BUILDER_API_KEY,
-  });
-  return pages.map(({ data }) => ({
-    params: { slug: data?.url?.replace("/", "") },
-  }));
-}
-
-const { slug } = Astro.params;
 ---
 
 <ProjectLayout
-  title={`Preview ${slug}`}
+  title={`Preview`}
   description="Preview Project"
-  url={`https://${DOMAIN_NAME}/preview/${PROJECT_MODEL_ID}/${slug}`}
+  url={`https://${DOMAIN_NAME}/preview/${PROJECT_MODEL_ID}`}
   image=""
 >
-  <div slot="background" class="background"></div>
   <main slot="main">
     <builder-component model={PROJECT_MODEL_ID} api-key={BUILDER_API_KEY}
     ></builder-component>
