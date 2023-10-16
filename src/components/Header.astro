@@ -1,3 +1,13 @@
+---
+import navLinks from "../data/navLinks";
+
+interface Props {
+  activeRoute?: string;
+}
+
+const { activeRoute } = Astro.props;
+---
+
 <header>
   <figure class="profile">
     <img
@@ -17,8 +27,13 @@
   </div>
 
   <nav aria-label="header social links">
-    <a href="/" class="socialLink">Home</a>
-    <a href="/project/portfolio" class="socialLink">Portfolio</a>
+    {
+      navLinks.map(({ href, title }) => (
+        <a {href} class="socialLink" data-active={activeRoute === href}>
+          {title}
+        </a>
+      ))
+    }
   </nav>
 </header>
 
@@ -73,14 +88,17 @@
     display: flex;
     gap: 1rem;
   }
-  header a {
+  header nav a {
     margin: 0;
     font-size: 1rem;
     color: rgb(var(--foregroundColor));
     text-decoration: none;
     transition: color ease-in-out 0.2s;
   }
-  header a:hover {
+  header nav a:hover {
+    color: rgb(var(--primaryColor));
+  }
+  header nav a[data-active] {
     color: rgb(var(--primaryColor));
   }
 </style>

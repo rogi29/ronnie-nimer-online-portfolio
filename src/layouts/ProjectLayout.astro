@@ -6,9 +6,11 @@ import Metadata from "../components/Metadata.astro";
 import type { Props as MetadataProps } from "../components/Metadata.astro";
 import ProjectFooter from "../components/ProjectFooter.astro";
 
-interface Props extends MetadataProps {}
+interface Props extends MetadataProps {
+  route?: string;
+}
 
-const props = Astro.props;
+const { route, ...metadata } = Astro.props;
 ---
 
 <style>
@@ -23,13 +25,13 @@ const props = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>{props.title}</title>
+    <title>{metadata.title}</title>
     <link rel="stylesheet" href="/styles/project.css" />
-    <Metadata {...props} />
+    <Metadata {...metadata} />
   </head>
   <body>
     <slot name="background" />
-    <Header />
+    <Header activeRoute={route} />
     <slot name="main" />
     <ProjectFooter />
     <ReloadPrompt />

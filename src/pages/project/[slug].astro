@@ -6,6 +6,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 import { DOMAIN_NAME } from "../../consts/site";
 import Presentation from "../../components/Presentation.astro";
 import { ElementTag, type ImageMetadata, type VideoMetadata } from "../../types/ElementMetadata";
+import { buildProjectLink } from "../../data/navLinks";
 
 export const PROJECT_MODEL_ID = "project";
 export const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
@@ -25,6 +26,7 @@ export async function getStaticPaths({}) {
 const { slug } = Astro.params;
 const { title, description, image } = Astro.props;
 
+const route = buildProjectLink(slug ?? "");
 const url = `https://${DOMAIN_NAME}/project/${slug}`;
 const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
   url: `/${slug}`,
@@ -36,7 +38,7 @@ let galleryIndex = -1;
 let links: string[] = [];
 ---
 
-<ProjectLayout {title} {description} {image} {url}>
+<ProjectLayout {title} {description} {image} {url} {route}>
   <main slot="main">
     <>
       {
