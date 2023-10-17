@@ -10,7 +10,7 @@ interface Props {
   size?: 1 | 2 | 3;
   loading?: "lazy" | "eager" | null;
   fetchpriority?: "high" | "low" | "auto";
-  placeholder?: "blur" | null;
+  placeholder?: "blur" | "blur-cover" | null;
   class?: string;
 }
 
@@ -40,6 +40,14 @@ switch (placeholder) {
       ratio,
       thumbnailWidth,
     )});`;
+    style += "background-size: contain;";
+    break;
+  case "blur-cover":
+    style = `background-image: url(${src}?tr=w-${thumbnailWidth},h-${calcHeight(
+      ratio,
+      thumbnailWidth,
+    )});`;
+    style += "background-size: cover;";
     break;
 }
 ---
@@ -74,7 +82,6 @@ switch (placeholder) {
   picture {
     display: block;
     background-color: #333333;
-    background-size: contain;
   }
 
   img {
