@@ -1,4 +1,5 @@
 ---
+import Icon from "astro-icon";
 import { builder, type BuilderContent } from "@builder.io/sdk";
 import ResponsivePicture from "../../components/ResponsivePicture.astro";
 import ShowcaseAsset from "../../components/ShowcaseAsset.astro";
@@ -45,10 +46,10 @@ let links: string[] = [];
         (entry?.data?.blocks ?? [])
           .filter((block) => block["@type"] === "@builder.io/sdk:Element")
           .map((block) => {
-                console.log(block)
             const options = block.component?.options ?? {};
             const externalTarget = block.properties?.target;
             const externalLink = block.properties?.href;
+            const externalTitle = block.properties?.linkTitle;
             const imagelink = (options.altText ?? block.properties?.alt ?? "")
               .toLowerCase()
               .replaceAll(" ", "-");
@@ -62,6 +63,21 @@ let links: string[] = [];
                       <Fragment set:html={block.component?.options?.text ?? ""} />
                     </div>
                   )
+                }
+                if (externalLink) {
+                  return (
+                    <div class="textWrapper">
+                      <Fragment set:html={block.component?.options?.text ?? ""} />
+                      <a href={externalLink} target={externalTarget} title={externalTitle}>
+                        <Icon
+                          pack="mdi"
+                          name="external-link"
+                          aria-hidden="true"
+                          style={{ color: "rgb(var(--primaryColor))" }}
+                        />
+                      </a>
+                    </div>
+                  );
                 }
                 return (
                   <Fragment set:html={block.component?.options?.text ?? ""} />

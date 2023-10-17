@@ -80,3 +80,19 @@ main a[role="button"] {
 main a[role="button"]:hover {
   border: 2px solid #999 !important;
 }
+.textWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+.textWrapper h3,
+.textWrapper h4,
+.textWrapper h5 {
+  width: auto;
+}
+.textWrapper a svg {
+  display: block;
+  width: 1.5rem;
+}
