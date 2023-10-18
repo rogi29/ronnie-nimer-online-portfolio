@@ -110,7 +110,11 @@ figcaption p {
     opacity: 1;
   }
   figcaption {
-    background: linear-gradient(transparent, rgba(var(--backgroundColor), 0.8));
+    background: linear-gradient(
+      transparent,
+      transparent,
+      rgba(var(--backgroundColor), 0.8)
+    );
   }
   figcaption p {
     display: none;

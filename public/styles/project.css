@@ -52,6 +52,11 @@ main p {
   text-align: center !important;
   color: #bbb !important;
 }
+@media (max-width: 480px) {
+  main p {
+    padding: 0 !important;
+  }
+}
 main video {
   display: block;
   width: 100%;
