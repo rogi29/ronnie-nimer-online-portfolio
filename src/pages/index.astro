@@ -3,6 +3,7 @@ import { builder, type BuilderContent } from "@builder.io/sdk";
 import { DOMAIN_NAME } from "../consts/site";
 import GalleryLayout from "../layouts/GalleryLayout.astro";
 import ResponsivePicture from "../components/core/ResponsivePicture.astro";
+import type { Props as ResponsivePictureProps } from "../components/core/ResponsivePicture.astro";
 import JsonLdConceptArt from "../components/JsonLdConceptArt.astro";
 import { buildHomeLink } from "../data/navLinks";
 
@@ -33,9 +34,14 @@ const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
           .map((block) => {
             switch (block?.component?.name?.toLowerCase()) {
               case "image":
+                const options = block?.component?.options ?? {};
                 const link = block?.properties?.href ?? "#";
                 const description = block?.properties?.description ?? "";
-                const options = block?.component?.options ?? {};
+                const loading = (block?.properties?.loading ??
+                  "lazy") as ResponsivePictureProps["loading"];
+                const priority = (block?.properties?.priority ??
+                  null) as ResponsivePictureProps["fetchpriority"];
+
                 return (
                   <>
                     <a href={link}>
@@ -46,8 +52,8 @@ const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
                           alt={options.altText}
                           width={options.width}
                           height={options.height}
-                          loading={options.lazy ? "lazy" : "eager"}
-                          fetchpriority={"high"}
+                          loading={loading}
+                          fetchpriority={priority}
                           placeholder={"blur-cover"}
                           size={2}
                         />

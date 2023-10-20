@@ -1,7 +1,7 @@
 ---
 import { MediaQueries, ScreenWidths, calcHeight } from "../../consts/theme";
 
-interface Props {
+export interface Props {
   src: string;
   title: string;
   alt: string;
@@ -48,6 +48,7 @@ switch (placeholder) {
       thumbnailWidth,
     )});`;
     style += "background-size: cover;";
+    style += "background-position: center;";
     break;
 }
 ---
@@ -60,7 +61,7 @@ switch (placeholder) {
         <source
           media={MediaQueries[currentWidth]}
           srcset={`${src}?tr=${transform(nextWidth)}`}
-          width={`${nextWidth}px`}
+          width={`${nextWidth > width ? width : nextWidth}px`}
           height={`${calcHeight(ratio, nextWidth)}px`}
         />
       );
@@ -70,7 +71,7 @@ switch (placeholder) {
     {alt}
     {title}
     src={`${src}?tr=${transform(width)}`}
-    width={`${ScreenWidths.XXL}px`}
+    width={`${ScreenWidths.XXL > width ? width : ScreenWidths.XXL}px`}
     height={`${calcHeight(ratio, width)}px`}
     {loading}
     {fetchpriority}
