@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  width: 100%;
+  background: rgb(var(--backgroundColor));
+  position: relative;
+}
 .builder-blocks,
 main {
   display: flex;
@@ -20,7 +26,7 @@ h1 {
   font-size: 2.75rem;
   font-weight: 600;
   text-align: center;
-  color: #fff;
+  color: rgb(var(--foregroundColor));
 }
 h2 {
   margin: 0 0 2rem;
@@ -28,20 +34,29 @@ h2 {
   font-weight: 400;
   text-align: center;
   color: #bbb;
+  color: color-mix(
+    in srgb,
+    rgb(var(--foregroundColor)) 70%,
+    rgb(var(--backgroundColor))
+  );
 }
 h3 {
-  margin: 0.75rem 0 0;
-  font-size: 2rem;
-  font-weight: 500;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
   text-align: start;
-  color: #fff;
+  color: rgb(var(--foregroundColor));
 }
 h4 {
   margin: 0;
   font-size: 1.375rem;
   font-weight: 400;
   text-align: start;
-  color: #bbb;
+  color: color-mix(
+    in srgb,
+    rgb(var(--foregroundColor)) 70%,
+    rgb(var(--backgroundColor))
+  );
 }
 main p {
   width: 100% !important;
@@ -75,15 +90,25 @@ main a[role="button"] {
   font-size: 1.25rem !important;
   font-family: Inter, sans-serif !important;
   text-decoration: none !important;
-  color: #fff !important;
-  border: 2px solid #eee !important;
+  color: rgb(var(--foregroundColor)) !important;
+  border: 2px solid
+    color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 90%,
+      rgb(var(--backgroundColor))
+    ) !important;
   box-shadow: none !important;
   background: transparent !important;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 main a[role="button"]:hover {
-  border: 2px solid #999 !important;
+  border: 2px solid
+    color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 60%,
+      rgb(var(--backgroundColor))
+    ) !important;
 }
 .textWrapper {
   display: flex;

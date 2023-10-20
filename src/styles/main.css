@@ -10,6 +10,11 @@
   --layoutMaxWidth: 64rem;
 }
 
+body.light {
+  --backgroundColor: 245, 245, 245;
+  --foregroundColor: 34, 34, 34;
+}
+
 @media (max-width: 1200px) {
   :root {
     --fontSize: 14px;
