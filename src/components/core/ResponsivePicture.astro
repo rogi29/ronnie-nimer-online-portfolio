@@ -8,6 +8,7 @@ export interface Props {
   width: number;
   height: number;
   size?: 1 | 2 | 3;
+  quality?: number;
   loading?: "lazy" | "eager" | null;
   fetchpriority?: "high" | "low" | "auto";
   placeholder?: "blur" | "blur-cover" | null;
@@ -21,6 +22,7 @@ const {
   width,
   height,
   size = 1,
+  quality = 100,
   loading = "lazy",
   fetchpriority = "auto",
   placeholder = null,
@@ -31,7 +33,7 @@ const thumbnailWidth = 25;
 const ratio = height / width;
 const widths = Object.values(ScreenWidths).sort((a, b) => a - b);
 const transform = (w: number) =>
-  `w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
+  `w-${w},h-${calcHeight(ratio, w)},q-${quality},f-auto`;
 
 let style: string | undefined;
 switch (placeholder) {

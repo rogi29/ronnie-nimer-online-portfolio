@@ -40,7 +40,7 @@ const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
                 const loading = (block?.properties?.loading ??
                   "lazy") as ResponsivePictureProps["loading"];
                 const priority = (block?.properties?.priority ??
-                  null) as ResponsivePictureProps["fetchpriority"];
+                  "auto") as ResponsivePictureProps["fetchpriority"];
 
                 return (
                   <>
@@ -55,6 +55,7 @@ const entry: BuilderContent | undefined = await builder.get(PROJECT_MODEL_ID, {
                           loading={loading}
                           fetchpriority={priority}
                           placeholder={"blur-cover"}
+                          quality={85}
                           size={2}
                         />
                         <figcaption>

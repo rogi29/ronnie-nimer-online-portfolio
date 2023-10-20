@@ -6,8 +6,9 @@ import ShowcaseAsset from "../../components/project/ShowcaseAsset.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
 import { DOMAIN_NAME } from "../../consts/site";
 import Presentation from "../../components/project/Presentation.astro";
-import { ElementTag, type ImageMetadata, type VideoMetadata } from "../../types/ElementMetadata";
+import { ElementTag, type VideoMetadata } from "../../types/ElementMetadata";
 import { buildProjectLink } from "../../data/navLinks";
+import type { Props as ResponsivePictureProps } from "../../components/core/ResponsivePicture.astro";
 
 export const PROJECT_MODEL_ID = "project";
 export const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
@@ -146,8 +147,8 @@ let links: string[] = [];
                   alt: options.altText,
                   originalWidth: options.width,
                   originalHeight: options.height,
-                  loading: options.lazy ? "lazy" : "eager",
-                  fetchpriority: galleryIndex === -1 ? "high" : "auto",
+                  loading: block?.properties?.loading ?? "lazy",
+                  fetchpriority: block?.properties?.priority ?? "auto",
                 };
                 return (
                   <ShowcaseAsset
