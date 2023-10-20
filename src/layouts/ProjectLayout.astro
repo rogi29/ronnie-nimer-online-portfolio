@@ -1,10 +1,11 @@
 ---
 import "../styles/main.css";
-import ReloadPrompt from "../components/ReloadPrompt.astro";
-import Header from "../components/Header.astro";
-import Metadata from "../components/Metadata.astro";
-import type { Props as MetadataProps } from "../components/Metadata.astro";
-import ProjectFooter from "../components/ProjectFooter.astro";
+import "../styles/project.css";
+import ReloadPrompt from "../components/pwa/ReloadPrompt.astro";
+import Header from "../components/layout/Header.astro";
+import Metadata from "../components/layout/Metadata.astro";
+import type { Props as MetadataProps } from "../components/layout/Metadata.astro";
+import ProjectFooter from "../components/layout/ProjectFooter.astro";
 
 interface Props extends MetadataProps {
   route?: string;
@@ -26,7 +27,6 @@ const { route, ...metadata } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <title>{metadata.title}</title>
-    <link rel="stylesheet" href="/styles/project.css" />
     <Metadata {...metadata} />
   </head>
   <body>

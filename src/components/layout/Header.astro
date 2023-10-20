@@ -1,5 +1,5 @@
 ---
-import navLinks from "../data/navLinks";
+import navLinks from "../../data/navLinks";
 
 interface Props {
   activeRoute?: string;
@@ -41,7 +41,7 @@ const { activeRoute } = Astro.props;
   header {
     display: flex;
     width: 100%;
-    max-width: 1025px;
+    max-width: var(--layoutMaxWidth);
     margin: 0 auto;
     position: relative;
     align-items: center;

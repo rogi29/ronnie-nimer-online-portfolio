@@ -1,12 +1,15 @@
 ---
-import socialLinksData from "../data/socialLinks.ts";
-import SocialLink from "./SocialLink.astro";
+import socialLinksData from "../../data/socialLinks";
+import SocialLink from "../core/SocialLink.astro";
 ---
 
 <footer>
-  <p>
+  <hr />
+  <h3>
     <b>CONTACT ME</b>
-  </p>
+  </h3>
+  <h4>Ronnie Nimer</h4>
+  <h5>Concept Artist</h5>
   <p>
     <a href="mailto:art.ronnie29@gmail.com" title="email address">
       art.ronnie29@gmail.com
@@ -24,20 +27,15 @@ import SocialLink from "./SocialLink.astro";
 <style>
   footer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1025px;
+    max-width: var(--layoutMaxWidth);
     margin: 0 auto;
     gap: 1rem;
     padding: 0 2rem 2.5rem;
     z-index: 1;
-  }
-  @media (max-width: 480px) {
-    footer {
-      flex-direction: column;
-    }
   }
   footer hr {
     width: 100%;
@@ -46,12 +44,29 @@ import SocialLink from "./SocialLink.astro";
     margin: 0 0 1.5rem;
     border: none;
   }
-  footer p {
+  footer p,
+  footer h3,
+  footer h4,
+  footer h5 {
     font-size: initial;
     margin: 0;
     font-weight: 400;
     color: rgb(var(--foregroundColor));
     text-align: center;
+  }
+  footer h4 {
+    color: color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 80%,
+      rgb(var(--backgroundColor))
+    );
+  }
+  footer h5 {
+    color: color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 60%,
+      rgb(var(--backgroundColor))
+    );
   }
   footer a {
     margin: 0;

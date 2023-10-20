@@ -7,9 +7,10 @@
   --foregroundColor: 255, 255, 255;
   --primaryColor: 97, 205, 255;
   --fontSize: 16px;
+  --layoutMaxWidth: 64rem;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   :root {
     --fontSize: 14px;
   }
