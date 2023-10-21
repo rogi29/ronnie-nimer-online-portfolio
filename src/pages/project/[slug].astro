@@ -95,11 +95,19 @@ let links: string[] = [];
                 links.push(imagelink);
                 galleryIndex++;
 
+                const mp4Source = block.properties?.mp4;
                 const srcSplit = options.video?.split(".")
-                const videoExt = srcSplit ? srcSplit[srcSplit.length - 1] : "webp"
+                const videoExt = srcSplit ? srcSplit[srcSplit.length - 1] : "webm"
+                const sources: VideoMetadata["src"] = []
+                if (mp4Source && videoExt !== "mp4") {
+                  sources.push({ url: mp4Source, type: `video/mp4` })
+                }
+                if (options.video) {
+                  sources.push({ url: options.video, type: `video/${videoExt}` })
+                }
                 const video: VideoMetadata = {
                   tag: ElementTag.VIDEO,
-                  src: [{ url: options.video, type: `video/${videoExt}` }],
+                  src: sources,
                   poster: options.poster,
                   title: block.properties?.alt ?? "",
                   id: block.properties?.alt ?? "",
