@@ -99,11 +99,11 @@ let links: string[] = [];
                 const srcSplit = options.video?.split(".")
                 const videoExt = srcSplit ? srcSplit[srcSplit.length - 1] : "webm"
                 const sources: VideoMetadata["src"] = []
-                if (mp4Source && videoExt !== "mp4") {
-                  sources.push({ url: mp4Source, type: `video/mp4` })
-                }
                 if (options.video) {
                   sources.push({ url: options.video, type: `video/${videoExt}` })
+                }
+                if (mp4Source && videoExt !== "mp4") {
+                  sources.push({ url: mp4Source, type: `video/mp4` })
                 }
                 const video: VideoMetadata = {
                   tag: ElementTag.VIDEO,
