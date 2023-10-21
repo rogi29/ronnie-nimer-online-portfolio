@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  width: 100%;
+  background: rgb(var(--backgroundColor));
+  position: relative;
+}
+.builder-blocks,
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100% - 2.5rem);
+  max-width: var(--layoutMaxWidth);
+  margin: 0 auto;
+  gap: 1.25rem;
+}
+h1,
+h2,
+h3,
+h4 {
+  width: 100%;
+  font-family: Inter, sans-serif;
+}
+h1 {
+  margin: 2rem 0 0;
+  font-size: 2.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: rgb(var(--foregroundColor));
+}
+h2 {
+  margin: 0 0 2rem;
+  font-size: 1.625rem;
+  font-weight: 400;
+  text-align: center;
+  color: #bbb;
+  color: color-mix(
+    in srgb,
+    rgb(var(--foregroundColor)) 70%,
+    rgb(var(--backgroundColor))
+  );
+}
+h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: start;
+  color: rgb(var(--foregroundColor));
+}
+h4 {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 400;
+  text-align: start;
+  color: color-mix(
+    in srgb,
+    rgb(var(--foregroundColor)) 70%,
+    rgb(var(--backgroundColor))
+  );
+}
+main p {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 10vw !important;
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+  text-align: center !important;
+  color: #bbb !important;
+}
+@media (max-width: 480px) {
+  main p {
+    padding: 0 !important;
+  }
+}
+main video {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+}
+main img {
+  width: 100%;
+  height: auto;
+}
+main a[role="button"] {
+  width: auto !important;
+  margin: 0 auto !important;
+  padding: 0.25rem 0.75rem !important;
+  font-size: 1.25rem !important;
+  font-family: Inter, sans-serif !important;
+  text-decoration: none !important;
+  color: rgb(var(--foregroundColor)) !important;
+  border: 2px solid
+    color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 90%,
+      rgb(var(--backgroundColor))
+    ) !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+main a[role="button"]:hover {
+  border: 2px solid
+    color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 60%,
+      rgb(var(--backgroundColor))
+    ) !important;
+}
+.textWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+.textWrapper h3,
+.textWrapper h4,
+.textWrapper h5 {
+  width: auto;
+}
+.textWrapper a svg {
+  display: block;
+  width: 1.5rem;
+}

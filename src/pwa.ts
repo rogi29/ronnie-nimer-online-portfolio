@@ -1,5 +1,7 @@
 import { registerSW } from "virtual:pwa-register";
 
+const DISABLE_PWA = import.meta.env.DISABLE_PWA;
+
 window.addEventListener("load", () => {
   const pwaToast = document.querySelector<HTMLDivElement>("#pwa-toast")!;
   const pwaToastMessage = pwaToast.querySelector<HTMLDivElement>(
@@ -49,4 +51,8 @@ window.addEventListener("load", () => {
       console.log("SW registered: ", swScriptUrl);
     },
   });
+
+  if (DISABLE_PWA) {
+    refreshSW();
+  }
 });

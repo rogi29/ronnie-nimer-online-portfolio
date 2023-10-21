@@ -1,16 +1,18 @@
 ---
-import { MediaQueries, ScreenWidths, calcHeight } from "../consts/theme";
+import { MediaQueries, ScreenWidths, calcHeight } from "../../consts/theme";
 
-interface Props {
+export interface Props {
   src: string;
   title: string;
   alt: string;
   width: number;
   height: number;
   size?: 1 | 2 | 3;
+  quality?: number;
   loading?: "lazy" | "eager" | null;
   fetchpriority?: "high" | "low" | "auto";
-  placeholder?: "blur" | null;
+  placeholder?: "blur" | "blur-cover" | null;
+  class?: string;
 }
 
 const {
@@ -20,16 +22,18 @@ const {
   width,
   height,
   size = 1,
+  quality = 100,
   loading = "lazy",
   fetchpriority = "auto",
   placeholder = null,
+  class: className,
 } = Astro.props;
 
 const thumbnailWidth = 25;
 const ratio = height / width;
 const widths = Object.values(ScreenWidths).sort((a, b) => a - b);
 const transform = (w: number) =>
-  `w-${w},h-${calcHeight(ratio, w)},q-100,f-auto`;
+  `w-${w},h-${calcHeight(ratio, w)},q-${quality},f-auto`;
 
 let style: string | undefined;
 switch (placeholder) {
@@ -38,11 +42,20 @@ switch (placeholder) {
       ratio,
       thumbnailWidth,
     )});`;
+    style += "background-size: contain;";
+    break;
+  case "blur-cover":
+    style = `background-image: url(${src}?tr=w-${thumbnailWidth},h-${calcHeight(
+      ratio,
+      thumbnailWidth,
+    )});`;
+    style += "background-size: cover;";
+    style += "background-position: center;";
     break;
 }
 ---
 
-<picture {style}>
+<picture class={className} {style}>
   {
     widths.map((currentWidth, i) => {
       const nextWidth = widths[i + size - 1] ?? width;
@@ -50,7 +63,7 @@ switch (placeholder) {
         <source
           media={MediaQueries[currentWidth]}
           srcset={`${src}?tr=${transform(nextWidth)}`}
-          width={`${nextWidth}px`}
+          width={`${nextWidth > width ? width : nextWidth}px`}
           height={`${calcHeight(ratio, nextWidth)}px`}
         />
       );
@@ -60,7 +73,7 @@ switch (placeholder) {
     {alt}
     {title}
     src={`${src}?tr=${transform(width)}`}
-    width={`${ScreenWidths.XXL}px`}
+    width={`${ScreenWidths.XXL > width ? width : ScreenWidths.XXL}px`}
     height={`${calcHeight(ratio, width)}px`}
     {loading}
     {fetchpriority}
@@ -72,7 +85,6 @@ switch (placeholder) {
   picture {
     display: block;
     background-color: #333333;
-    background-size: contain;
   }
 
   img {

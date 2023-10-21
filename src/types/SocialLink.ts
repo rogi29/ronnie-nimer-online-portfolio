@@ -1,8 +1,8 @@
-export interface SocialLink {
-  href: string;
-  title: string;
+import type { Link } from "./Link";
+
+export interface SocialLink extends Link {
   icon: {
-    pack: "mdi";
+    pack: "mdi" | "clarity" | "dashicons";
     name: string;
     color?: string;
   };

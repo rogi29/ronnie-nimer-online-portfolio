@@ -1,0 +1,104 @@
+---
+import navLinks from "../../data/navLinks";
+
+interface Props {
+  activeRoute?: string;
+}
+
+const { activeRoute } = Astro.props;
+---
+
+<header>
+  <figure class="profile">
+    <img
+      src="https://ik.imagekit.io/8hod93w55/tr:w-262,h-262,q-100/ronnie-profile.jpg"
+      aria-labelledby="artist-name"
+      width="55px"
+      height="55px"
+      fetchpriority="high"
+      loading="eager"
+      decoding="auto"
+    />
+  </figure>
+
+  <div class="artist">
+    <p class="fullname" id="artist-name">Ronnie Nimer</p>
+    <p class="title">Concept Artist</p>
+  </div>
+
+  <nav aria-label="header social links">
+    {
+      navLinks.map(({ href, title }) => (
+        <a {href} class="socialLink" data-active={activeRoute === href}>
+          {title}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<style>
+  header {
+    display: flex;
+    width: 100%;
+    max-width: var(--layoutMaxWidth);
+    margin: 0 auto;
+    position: relative;
+    align-items: center;
+    padding: 1.5rem 1.25rem;
+    gap: 0.75rem;
+    z-index: 1;
+  }
+  header .profile {
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 55px;
+    height: 55px;
+    margin: 0;
+  }
+  header .artist {
+    flex-grow: 1;
+  }
+  header .artist .fullname {
+    font-family: Inter, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: rgb(var(--foregroundColor));
+    text-align: start;
+    margin: 0;
+    padding: 0;
+    line-height: initial;
+  }
+  header .artist .title {
+    font-family: Inter, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: color-mix(
+      in srgb,
+      rgb(var(--foregroundColor)) 60%,
+      rgb(var(--backgroundColor))
+    );
+    text-align: start;
+    margin: 0;
+    padding: 0;
+    line-height: initial;
+  }
+  header nav {
+    display: flex;
+    gap: 1rem;
+  }
+  header nav a {
+    margin: 0;
+    font-size: 1rem;
+    color: rgb(var(--foregroundColor));
+    text-decoration: none;
+    transition: color ease-in-out 0.2s;
+  }
+  header nav a:hover {
+    color: rgb(var(--primaryColor));
+  }
+  header nav a[data-active] {
+    color: rgb(var(--primaryColor));
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import { pwaInfo } from "virtual:pwa-info";
+import { DOMAIN_NAME } from "../../consts/site.ts";
+
+export interface Props {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+}
+
+const { title, description, image, url } = Astro.props;
+---
+
+<>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="theme-color" content="#222222" />
+  <meta name="generator" content={Astro.generator} />
+  <meta name="description" content={description} />
+  <!-- Facebook Meta Tags -->
+  <meta property="og:url" content={url} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="twitter:domain" content={DOMAIN_NAME} />
+  <meta property="twitter:url" content={url} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+    rel="preload"
+    as="style"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+    rel="stylesheet"
+  />
+  <!-- PWA -->
+  {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+</>

@@ -12,6 +12,8 @@
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
+    "@builder.io/sdk": "^2.0.8",
+    "@builder.io/sdk-qwik": "^0.6.2",
     "astro": "^3.1.0",
     "astro-icon": "^0.8.1"
   },

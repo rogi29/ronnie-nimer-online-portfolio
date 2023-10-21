@@ -1,0 +1,39 @@
+---
+import { builder } from "@builder.io/sdk";
+import { DOMAIN_NAME } from "../../consts/site";
+import GalleryLayout from "../../layouts/GalleryLayout.astro";
+
+export const PROJECT_MODEL_ID = "gallery";
+export const BUILDER_API_KEY = import.meta.env.BUILDER_API_PUBLIC_KEY;
+---
+
+<GalleryLayout
+  title={`Preview`}
+  description="Preview Gallery"
+  url={`https://${DOMAIN_NAME}/preview/${PROJECT_MODEL_ID}`}
+  image=""
+>
+  <main>
+    <builder-component model={PROJECT_MODEL_ID} api-key={BUILDER_API_KEY}
+    ></builder-component>
+    <dialog open>PREVIEW MODE</dialog>
+    <script async src="https://cdn.builder.io/js/webcomponents"></script>
+  </main>
+</GalleryLayout>
+
+<style>
+  builder-component {
+    display: block;
+    width: 100%;
+  }
+  dialog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    border: none;
+    width: 100%;
+    background: #333;
+    color: #111;
+  }
+</style>
