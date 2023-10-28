@@ -15,7 +15,7 @@ body.light {
   --foregroundColor: 34, 34, 34;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1440px) {
   :root {
     --fontSize: 14px;
   }
